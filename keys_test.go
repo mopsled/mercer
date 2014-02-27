@@ -2,6 +2,7 @@ package mercer
 
 import (
 	"bytes"
+	"encoding/hex"
 	"reflect"
 	"testing"
 )
@@ -38,5 +39,21 @@ func TestPrivateKeysAreGeneratedDifferent(t *testing.T) {
 	}
 	if bytes.Equal(key1, key2) {
 		t.Errorf("Two generated private keys should have different bytes")
+	}
+}
+
+func TestChecksumBytes(t *testing.T) {
+	key, err := hex.DecodeString("800C28FCA386C7A227600B2FE50B7CAE11EC86D3BF1FBE471BE89827E19D72AA1D")
+	if err != nil {
+		t.Fatalf("Error creating key from hex string")
+	}
+	checksum := ChecksumBytes(key)
+	expectedChecksum, err := hex.DecodeString("507A5B8D")
+	if err != nil {
+		t.Fatalf("Error creating expected checksum from hex string")
+	}
+	if !bytes.Equal(checksum, expectedChecksum) {
+		t.Errorf("Checksum for private key should be %s, but it's %s", hex.EncodeToString(expectedChecksum),
+			hex.EncodeToString(checksum))
 	}
 }
