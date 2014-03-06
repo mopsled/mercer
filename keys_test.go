@@ -42,7 +42,7 @@ func TestPrivateKeysAreGeneratedDifferent(t *testing.T) {
 	}
 }
 
-func TestChecksumBytes(t *testing.T) {
+func TestChecksumBytesReturnsExpectedChecksum(t *testing.T) {
 	key, err := hex.DecodeString("800C28FCA386C7A227600B2FE50B7CAE11EC86D3BF1FBE471BE89827E19D72AA1D")
 	if err != nil {
 		t.Fatalf("Error creating key from hex string")
