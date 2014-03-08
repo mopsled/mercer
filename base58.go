@@ -7,7 +7,7 @@ import (
 
 func Encode(b []byte) string {
 	base58characters := "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz"
-	buffer := new(bytes.Buffer)
+	var buffer bytes.Buffer
 
 	x := new(big.Int).SetBytes(b)
 	for x.Cmp(big.NewInt(0)) == 1 {
@@ -16,13 +16,8 @@ func Encode(b []byte) string {
 		buffer.WriteByte(base58characters[remainder.Uint64()])
 	}
 
-	for _, v := range b {
-		if v == 0 {
-			buffer.WriteString("1")
-		} else {
-			break
-		}
-	}
+	leadingZeros := leadingZerosForBytes(b)
+	buffer.WriteString(leadingZeros)
 	return reverse(buffer.String())
 }
 
@@ -32,4 +27,16 @@ func reverse(s string) string {
 		runes[i], runes[j] = runes[j], runes[i]
 	}
 	return string(runes)
+}
+
+func leadingZerosForBytes(b []byte) string {
+	var buffer bytes.Buffer
+	for _, v := range b {
+		if v == 0 {
+			buffer.WriteString("1")
+		} else {
+			break
+		}
+	}
+	return buffer.String()
 }
