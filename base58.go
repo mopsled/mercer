@@ -15,6 +15,14 @@ func Encode(b []byte) string {
 		x, remainder = x.DivMod(x, big.NewInt(58), new(big.Int))
 		buffer.WriteByte(base58characters[remainder.Uint64()])
 	}
+
+	for _, v := range b {
+		if v == 0 {
+			buffer.WriteString("1")
+		} else {
+			break
+		}
+	}
 	return reverse(buffer.String())
 }
 
