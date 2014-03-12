@@ -22,8 +22,8 @@ func TestPrivateKeyIsTheRightLength(t *testing.T) {
 	if err != nil {
 		t.Fatalf("PrivateKey() returned an error: %s", err)
 	}
-	if len(key) != 64 {
-		t.Errorf("A private key should be a 64-byte slice")
+	if len(key) != 32 {
+		t.Errorf("A private key should be a 32-byte slice")
 	}
 }
 

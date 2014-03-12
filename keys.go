@@ -5,7 +5,7 @@ import (
 )
 
 func PrivateKey() (key []byte, err error) {
-	key = make([]byte, 64)
+	key = make([]byte, 32)
 	_, err = rand.Read(key)
 	return
 }
